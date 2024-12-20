@@ -2,8 +2,10 @@ import requests
 import allure
 from typing import Dict, List, Tuple, Any, Optional
 
+from requests import Response
+
 # Переменные для авторизации
-TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjIxMzYyMDY0LCJpYXQiOjE3MzQ2ODgyMTUsImV4cCI6MTczNDY5MTgxNSwidHlwZSI6MjB9.rJjhFhmx28CiN8YyxaqGNa__gTwjqvm6EPLOO1h3zB8"
+TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ4NTc3MzgsImlhdCI6MTczNDY4OTczOCwiaXNzIjoiL2FwaS92MS9hdXRoL2Fub255bW91cyIsInN1YiI6IjQ2MjM5MWMzMGZhN2E3ZjkzYjM2NWIzNzMxM2U1MzAzMTBkOWU2MGYyOTU5MWE1NGI5MTk3YTI1YTYyNjBkNmUiLCJ0eXBlIjoxMH0.sdFcuPXEMrlKeD_Mg00ZEtL5aIM-nyXPfZLd0v4xqE8"
 MY_HEADERS = {"Authorization": f"Bearer {TOKEN}", "Content-Type": "application/json"}
 
 
@@ -113,7 +115,7 @@ class BooksApi:
 
             with allure.step("Отправка POST запроса для добавления книги в корзину"):
                 response = requests.post(
-                    f"{self.url}/api/v1/cart/product", headers=MY_HEADERS, json=data
+                    f"{self.url}/api/v1/cart/product", headers=self.my_headers, json=data
                 )
                 try:
                     response_json = response.json()
@@ -147,12 +149,13 @@ class BooksApi:
         return book_data
 
     @allure.step("Api. Удаление всех книг из корзины")
-    def delete_books_from_cart(self):
+    def delete_books_from_cart(self) -> Response:
         """Удаляет все книги из корзины и возвращает ответ сервера."""
-        response = requests.delete(f"{self.url}/api/v1/cart", headers=MY_HEADERS)
+        response = requests.delete(f"{self.url}/api/v1/cart", headers=self.my_headers)
         return response
 
-    def get_cart_contents(self):
+    @allure.step("Api. Содержимое корзины")
+    def get_cart_contents(self) -> Dict[str, Any]:
         """Возвращает содержимое корзины."""
-        response = requests.get(f"{self.url}/api/v1/cart", headers=MY_HEADERS)
+        response = requests.get(f"{self.url}/api/v1/cart", headers=self.my_headers)
         return response.json()

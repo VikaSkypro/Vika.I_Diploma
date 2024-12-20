@@ -17,59 +17,130 @@ class BooksIU:
         self.driver = driver
 
     @allure.step("Api. Выбор города")
+    # def find_city(self, city) -> None:
+    #     """ Метод работает с popup выбора города.
+    #      Если город совпадает с нужным -
+    #      закрывает popup. Если нет -
+    #      происходит выбор нужного города
+    #      """
+    #     try:
+    #         with allure.step('Ожидание появления popup для изменения города'):
+    #             city_popup = WebDriverWait(self.driver, 10).until(
+    #                 EC.visibility_of_element_located(
+    #                     (By.CSS_SELECTOR, ".change-city.change-city-container__popup-confirmation"))
+    #             )
+    #
+    #         with allure.step('Есть popup'):
+    #             if city_popup:
+    #                 with allure.step('Указан нужный город'):
+    #                     city_title = city_popup.find_element(By.CSS_SELECTOR, ".change-city__title").text
+    #                 if city in city_title:
+    #                     with allure.step('Город совпадает, нажимаем кнопку "Да, я здесь"'):
+    #                         button_yes = city_popup.find_element(By.CSS_SELECTOR,
+    #                                                              ".button.change-city__button.change-city__button--accept.blue")
+    #                         button_yes.click()
+    #
+    #                     with allure.step('Popup закрылся'):
+    #                         WebDriverWait(self.driver, 10).until(
+    #                             EC.invisibility_of_element(city_popup)
+    #                         )
+    #                 else:
+    #                     with allure.step('Город не совпадает, нажимаем кнопку "Нет, изменить город"'):
+    #                         button_no = city_popup.find_element(By.CSS_SELECTOR,
+    #                                                             ".button.change-city__button.change-city__button--cancel.light-blue")
+    #                         button_no.click()
+    #
+    #                     with allure.step('Ожидание появления popup для выбора города'):
+    #                         city_modal = WebDriverWait(self.driver, 10).until(
+    #                             EC.visibility_of_element_located((By.CSS_SELECTOR, ".city-modal__content"))
+    #                         )
+    #
+    #                     with allure.step('Поиск и выбор нужного города'):
+    #                         city_option = city_modal.find_element(By.XPATH, f"//li[contains(text(), '{city}')]")
+    #                         city_option.click()
+    #
+    #                     with allure.step('Popup закрылся'):
+    #                         WebDriverWait(self.driver, 10).until(
+    #                             EC.invisibility_of_element(city_modal)
+    #                         )
+    #     except Exception as e:
+    #         print(f"Произошла ошибка при работе со всплывающим окном: {e}")
+    #
+
+
+    @allure.step("Api. Выбор города")
     def find_city(self, city) -> None:
         """ Метод работает с popup выбора города.
-         Если город совпадает с нужным -
-         закрывает popup. Если нет -
-         происходит выбор нужного города
-         """
+        Если город совпадает с нужным -
+        закрывает popup. Если нет -
+        происходит выбор нужного города.
+        """
         try:
             with allure.step('Ожидание появления popup для изменения города'):
-                city_popup = WebDriverWait(self.driver, 3).until(
+                city_popup = WebDriverWait(self.driver, 10).until(
                     EC.visibility_of_element_located(
                         (By.CSS_SELECTOR, ".change-city.change-city-container__popup-confirmation"))
                 )
+            self.handle_city_popup(city_popup, city)
 
-            with allure.step('Есть popup'):
-                if city_popup:
-                    with allure.step('Указан нужный город'):
-                        city_title = city_popup.find_element(By.CSS_SELECTOR, ".change-city__title").text
-                    if city in city_title:
-                        with allure.step('Город совпадает, нажимаем кнопку "Да, я здесь"'):
-                            button_yes = city_popup.find_element(By.CSS_SELECTOR,
-                                                                 ".button.change-city__button.change-city__button--accept.blue")
-                            button_yes.click()
+        except TimeoutException:
+            with allure.step('Попап не найден, проверяем текущий город'):
+                current_city_element = WebDriverWait(self.driver, 10).until(
+                    EC.visibility_of_element_located((By.CSS_SELECTOR, ".header-city__title"))
+                )
+                current_city = current_city_element.text
 
-                        with allure.step('Popup закрылся'):
-                            WebDriverWait(self.driver, 3).until(
-                                EC.invisibility_of_element(city_popup)
-                            )
-                    else:
-                        with allure.step('Город не совпадает, нажимаем кнопку "Нет, изменить город"'):
-                            button_no = city_popup.find_element(By.CSS_SELECTOR,
-                                                                ".button.change-city__button.change-city__button--cancel.light-blue")
-                            button_no.click()
+                if city in current_city:
+                    with allure.step('Текущий город совпадает, завершаем метод'):
+                        return
+                else:
+                    with allure.step('Текущий город не совпадает, меняем город'):
+                        current_city_element.click()
+                    # Ожидаем появления модала выбора города
+                    city_popup = WebDriverWait(self.driver, 10).until(
+                        EC.visibility_of_element_located(
+                            (By.CSS_SELECTOR, ".change-city.change-city-container__popup-confirmation"))
+                    )
+                    self.handle_city_popup(city_popup, city)
 
-                        with allure.step('Ожидание появления popup для выбора города'):
-                            city_modal = WebDriverWait(self.driver, 3).until(
-                                EC.visibility_of_element_located((By.CSS_SELECTOR, ".city-modal__content"))
-                            )
+    def handle_city_popup(self, city_popup, city):
+        """ Обрабатывает попап выбора города. """
+        with allure.step('Обработка pop-up для выбора города'):
+            city_title = city_popup.find_element(By.CSS_SELECTOR, ".change-city__title").text
+            if city in city_title:
+                with allure.step('Город совпадает, нажимаем кнопку "Да, я здесь"'):
+                    button_yes = city_popup.find_element(By.CSS_SELECTOR,
+                                                         ".button.change-city__button.change-city__button--accept.blue")
+                    button_yes.click()
 
-                        with allure.step('Поиск и выбор нужного города'):
-                            city_option = city_modal.find_element(By.XPATH, f"//li[contains(text(), '{city}')]")
-                            city_option.click()
+                with allure.step('Popup закрылся'):
+                    WebDriverWait(self.driver, 10).until(
+                        EC.invisibility_of_element(city_popup)
+                    )
+            else:
+                with allure.step('Город не совпадает, нажимаем кнопку "Нет, изменить город"'):
+                    button_no = city_popup.find_element(By.CSS_SELECTOR,
+                                                        ".button.change-city__button.change-city__button--cancel.light-blue")
+                    button_no.click()
 
-                        with allure.step('Popup закрылся'):
-                            WebDriverWait(self.driver, 3).until(
-                                EC.invisibility_of_element(city_modal)
-                            )
-        except Exception as e:
-            print(f"Произошла ошибка при работе со всплывающим окном: {e}")
+                with allure.step('Ожидание появления popup для выбора города'):
+                    city_modal = WebDriverWait(self.driver, 10).until(
+                        EC.visibility_of_element_located((By.CSS_SELECTOR, ".city-modal__content"))
+                    )
+
+                with allure.step('Поиск и выбор нужного города'):
+                    city_option = city_modal.find_element(By.XPATH, f"//li[contains(text(), '{city}')]")
+                    city_option.click()
+
+                with allure.step('Popup закрылся'):
+                    WebDriverWait(self.driver, 10).until(
+                        EC.invisibility_of_element(city_modal)
+                    )
 
     def close_notification_reg(self):
         """Метод закрывает предложение авторизации и скидки"""
         try:
-            WebDriverWait(self.driver, 2).until(
+            WebDriverWait(self.driver, 5).until(
                 EC.visibility_of_element_located((By.CLASS_NAME, "popmechanic-main"))
             )
             close_button = self.driver.find_element(By.CLASS_NAME, "popmechanic-close")
@@ -81,7 +152,7 @@ class BooksIU:
     def close_notification(self) -> None:
         """Метод закрывает уведомление о подписке"""
         try:
-            notification = WebDriverWait(self.driver, 2).until(
+            notification = WebDriverWait(self.driver, 5).until(
                 EC.visibility_of_element_located((By.CSS_SELECTOR, "div.push-notification__balloon"))
             )
             close_button1 = notification.find_element(By.CSS_SELECTOR, "button.push-notification__no-button")
@@ -94,7 +165,7 @@ class BooksIU:
         """Метод находит поле поиска, вводит фразу и нажимает Enter."""
         try:
             with allure.step('Ожидание появления поля поиска'):
-                search_input = WebDriverWait(self.driver, 3).until(
+                search_input = WebDriverWait(self.driver, 10).until(
                     EC.visibility_of_element_located((By.CSS_SELECTOR, 'input[name="phrase"]'))
                 )
 
@@ -127,7 +198,7 @@ class BooksIU:
             attempts = 1  # Количество попыток поиска
             for attempt in range(attempts):
                 try:
-                    WebDriverWait(self.driver, 3).until(
+                    WebDriverWait(self.driver, 10).until(
                         EC.presence_of_all_elements_located(
                             (By.XPATH, "//article[@class='product-card product-card product']"))
                     )

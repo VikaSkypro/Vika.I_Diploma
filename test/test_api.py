@@ -20,8 +20,9 @@ class TestBooksAPI:
     @pytest.mark.positive
     @allure.step("1. Поиск книги по части названия в Москве с учетом регистра")
     def test_search_book_moscow(self, shopping_books):
-        city_id = "213"
-        title = "Гарри Поттер и Проклятое дитя."
+        with allure.step('Ввод города и названия книги'):
+            city_id = "213"
+            title = "Гарри Поттер и Проклятое дитя."
         api = shopping_books
 
         with allure.step(
@@ -86,10 +87,11 @@ class TestBooksAPI:
     @allure.step("3. Поиск книги по автору в Минске")
     def test_search_book_author(self, shopping_books):
         api = shopping_books
-        city_id = "694357"
-        author_first_name = "Джоан Кэтлин"
-        author_last_name = "Роулинг"
-        author_name = author_first_name + " " + author_last_name
+        with allure.step('Ввод города и автора'):
+            city_id = "694357"
+            author_first_name = "Джоан Кэтлин"
+            author_last_name = "Роулинг"
+            author_name = author_first_name + " " + author_last_name
         with allure.step(
             f'Поиск книги по автору: "{author_name}" в городе с ID: {city_id}'
         ):
@@ -123,7 +125,8 @@ class TestBooksAPI:
     @allure.step("4. Добавление найденных книг в корзину")
     def test_add_books_to_cart(self, shopping_books):
         api = shopping_books
-        book_title = "Белоснежка и семь гномов"
+        with allure.step('Ввод названия книги'):
+            book_title = "Белоснежка и семь гномов"
 
         with allure.step(f'Поиск книги по заголовку: "{book_title}"'):
             resp_search, status_code = api.search_books_by_title(title=book_title)
@@ -166,8 +169,9 @@ class TestBooksAPI:
     @pytest.mark.positive
     def test_delete_books_cart(self, shopping_books):
         api = shopping_books
-        city_id = "213"
-        title = "Белоснежка и семь гномов"
+        with allure.step('Ввод города и названия книги'):
+            city_id = "213"
+            title = "Белоснежка и семь гномов"
         with allure.step(
             f'Поиск книги с заголовком: "{title}" для добавления в корзину'
         ):
@@ -202,8 +206,8 @@ class TestBooksAPI:
     @pytest.mark.negative
     def test_search_books_invalid_phrase(self, shopping_books):
         api = shopping_books
-        phrase = "p"
-
+        with allure.step('Ввод названия книги'):
+            phrase = "p"
         response_json, status_code = api.search_books(value=phrase)
 
         with allure.step("Статус-код = 400"):
@@ -232,8 +236,9 @@ class TestBooksAPI:
     @pytest.mark.negative
     def test_search_book_sensitive_register(self, shopping_books):
         api = shopping_books
-        city_id = "213"
-        title = "гарри поттер и проклятое дитя."
+        with allure.step('Ввод города и названия книги'):
+            city_id = "213"
+            title = "гарри поттер и проклятое дитя."
 
         with allure.step(
             f'Поиск книги с заголовком: "{title}" в городе с ID: {city_id}'
@@ -272,8 +277,8 @@ class TestBooksAPI:
     @pytest.mark.negative
     def test_search_books_hieroglyphs(self, shopping_books):
         api = shopping_books
-        phrase = "アびけ"
-
+        with allure.step('Ввод названия книги'):
+            phrase = "アびけ"
         response_json, status_code = api.search_books(value=phrase)
 
         with allure.step("Статус-код = 422"):
@@ -302,8 +307,8 @@ class TestBooksAPI:
     @pytest.mark.negative
     def test_search_books_spec_char(self, shopping_books):
         api = shopping_books
-        phrase = "!@"
-
+        with allure.step('Ввод названия книги'):
+            phrase = "!@"
         response_json, status_code = api.search_books(value=phrase)
 
         with allure.step("Статус-код = 422"):

@@ -1,13 +1,6 @@
 import pytest
 import allure
 from allure_commons.types import Severity
-from selenium import webdriver
-from selenium.common import NoSuchWindowException, TimeoutException
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
 from books_ui import BooksIU
 from fuzzywuzzy import fuzz
 
@@ -68,8 +61,8 @@ class TestBooksSearch:
         with allure.step('Ввод города и названия книги'):
             city = "Казань"
             book_title = "Болотница"
-        books_ui.close_notification_reg()
-        books_ui.close_notification()
+        # books_ui.close_notification_reg()
+        # books_ui.close_notification()
         books_ui.find_city(city)
         books_ui.search_for_book(book_title)
 
@@ -138,8 +131,8 @@ class TestBooksSearch:
         with allure.step('Ввод города и названия книги'):
             city = "Уфа"
             book_title = "Балотница"
-        books_ui.close_notification_reg()
-        books_ui.close_notification()
+        # books_ui.close_notification_reg()
+        # books_ui.close_notification()
         books_ui.find_city(city)
         books_ui.search_for_book(book_title)
 
@@ -165,7 +158,7 @@ class TestBooksSearch:
                         "Выбирает нужный город. "
                         "Выполняет поиск книги с иероглифами в названии."
                         "Проверяет, что книга не найдена.")
-    @allure.severity(Severity.MINOR)
+    @allure.severity('minor')
     @allure.step('Поиск книг с названием из иероглифов')
     def test_ui_search_book_hieroglyphs(self, books_ui):
         """Тест выполняет поиск книги по названию из иероглифов.
@@ -175,8 +168,8 @@ class TestBooksSearch:
         with allure.step('Ввод города и названия книги'):
             city = "Москва"
             book_title = "アびけ"
-        books_ui.close_notification_reg()
-        books_ui.close_notification()
+        # books_ui.close_notification_reg()
+        # books_ui.close_notification()
         books_ui.find_city(city)
         books_ui.search_for_book(book_title)
 
@@ -213,8 +206,8 @@ class TestBooksSearch:
         with allure.step('Ввод города и названия книги'):
             city = "Москва"
             book_title = "!@"
-        books_ui.close_notification_reg()
-        books_ui.close_notification()
+        #books_ui.close_notification_reg()
+        #books_ui.close_notification()
         books_ui.find_city(city)
         books_ui.search_for_book(book_title)
 

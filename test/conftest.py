@@ -2,19 +2,23 @@ import pytest
 from selenium import webdriver
 from books_ui import BooksIU
 
-
 # Фикстура для веб-драйвера
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='session')
 def driver():
     driver = webdriver.Chrome()
     driver.maximize_window()
     driver.implicitly_wait(4)
-    driver.get("https://www.chitai-gorod.ru/")
     yield driver
-    driver.quit()  # Закрывает драйвер после теста
+    driver.quit()  # Закрывает драйвер после всех тестов
 
+# Фикстура для открытия главной страницы
+@pytest.fixture()
+def open_main_page(driver):
+    driver.get("https://www.chitai-gorod.ru/")
+    yield
+    # Здесь можно добавить логику для выполнения после теста, если потребуется
 
 # Фикстура для экземпляра BooksIU
 @pytest.fixture()
-def books_ui(driver):
-    return BooksIU(driver)  # Возвращаем экземпляр BooksIU с переданным драйвером
+def books_ui(driver, open_main_page):
+    return BooksIU(driver)
