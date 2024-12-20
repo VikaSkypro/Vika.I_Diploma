@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"0dec515d51c986430e8ff25cbc0c326d","name":"API. Интернет-магазин Читай-город","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}},{"uid":"a5e88eb5be95a8664b26fd3c0a79b1b2","name":"UI. Интернет-магазин Читай-город","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
