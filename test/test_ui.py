@@ -1,8 +1,9 @@
 import pytest
 import allure
 from allure_commons.types import Severity
-from books_ui import BooksIU
 from fuzzywuzzy import fuzz
+from pages.books_ui import BooksIU
+
 
 @allure.epic("UI. Интернет-магазин Читай-город")
 @allure.feature("UI.Главная страница")
@@ -21,7 +22,7 @@ class TestBooksSearch:
                         "Проверяет, что книга найдена.")
     @allure.severity(Severity.BLOCKER)
     @allure.step('1. Поиск книги по названию в городе Москва')
-    def test_search_for_book_in_moscow(self, books_ui):
+    def test_search_for_book_in_moscow(self, driver, open_main_page, books_ui):
         """Тест выполняет поиск книги по названию в Москве.
         Нечувствителен к регистру и опечаткам"""
         with allure.step('Ввод города и названия книги'):

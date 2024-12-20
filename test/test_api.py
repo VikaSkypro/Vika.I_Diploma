@@ -1,7 +1,7 @@
 import pytest
 import allure
 from allure_commons.types import Severity
-from BooksApi import BooksApi
+from pages.books_api import BooksApi
 
 @allure.epic("API. Интернет-магазин Читай-город")
 @allure.suite('API. Поиск книг в интернет-магазине "Читай-город"')

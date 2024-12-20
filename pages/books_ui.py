@@ -1,72 +1,15 @@
 import pytest
 import allure
-from allure_commons.types import Severity
-from selenium import webdriver
 from selenium.webdriver import Keys
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, StaleElementReferenceException, \
-    ElementClickInterceptedException
-from fuzzywuzzy import fuzz
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, StaleElementReferenceException
+
 
 class BooksIU:
     def __init__(self, driver):
         self.driver = driver
-
-    @allure.step("Api. Выбор города")
-    # def find_city(self, city) -> None:
-    #     """ Метод работает с popup выбора города.
-    #      Если город совпадает с нужным -
-    #      закрывает popup. Если нет -
-    #      происходит выбор нужного города
-    #      """
-    #     try:
-    #         with allure.step('Ожидание появления popup для изменения города'):
-    #             city_popup = WebDriverWait(self.driver, 10).until(
-    #                 EC.visibility_of_element_located(
-    #                     (By.CSS_SELECTOR, ".change-city.change-city-container__popup-confirmation"))
-    #             )
-    #
-    #         with allure.step('Есть popup'):
-    #             if city_popup:
-    #                 with allure.step('Указан нужный город'):
-    #                     city_title = city_popup.find_element(By.CSS_SELECTOR, ".change-city__title").text
-    #                 if city in city_title:
-    #                     with allure.step('Город совпадает, нажимаем кнопку "Да, я здесь"'):
-    #                         button_yes = city_popup.find_element(By.CSS_SELECTOR,
-    #                                                              ".button.change-city__button.change-city__button--accept.blue")
-    #                         button_yes.click()
-    #
-    #                     with allure.step('Popup закрылся'):
-    #                         WebDriverWait(self.driver, 10).until(
-    #                             EC.invisibility_of_element(city_popup)
-    #                         )
-    #                 else:
-    #                     with allure.step('Город не совпадает, нажимаем кнопку "Нет, изменить город"'):
-    #                         button_no = city_popup.find_element(By.CSS_SELECTOR,
-    #                                                             ".button.change-city__button.change-city__button--cancel.light-blue")
-    #                         button_no.click()
-    #
-    #                     with allure.step('Ожидание появления popup для выбора города'):
-    #                         city_modal = WebDriverWait(self.driver, 10).until(
-    #                             EC.visibility_of_element_located((By.CSS_SELECTOR, ".city-modal__content"))
-    #                         )
-    #
-    #                     with allure.step('Поиск и выбор нужного города'):
-    #                         city_option = city_modal.find_element(By.XPATH, f"//li[contains(text(), '{city}')]")
-    #                         city_option.click()
-    #
-    #                     with allure.step('Popup закрылся'):
-    #                         WebDriverWait(self.driver, 10).until(
-    #                             EC.invisibility_of_element(city_modal)
-    #                         )
-    #     except Exception as e:
-    #         print(f"Произошла ошибка при работе со всплывающим окном: {e}")
-    #
-
 
     @allure.step("Api. Выбор города")
     def find_city(self, city) -> None:
