@@ -22,7 +22,7 @@ class TestBooksSearch:
                         "Проверяет, что книга найдена.")
     @allure.severity(Severity.BLOCKER)
     @allure.step('1. Поиск книги по названию в городе Москва')
-    def test_search_for_book_in_moscow(self, driver, open_main_page, books_ui):
+    def test_ui_search_for_book_in_moscow(self, driver, open_main_page, books_ui):
         """Тест выполняет поиск книги по названию в Москве.
         Нечувствителен к регистру и опечаткам"""
         with allure.step('Ввод города и названия книги'):
@@ -55,7 +55,7 @@ class TestBooksSearch:
                         "Проверяет, что книга найдена.")
     @allure.severity(Severity.NORMAL)
     @allure.step('2. Поиск книги по полному названию в городе Казань')
-    def test_search_for_book_in_kazan(self, books_ui):
+    def test_ui_search_for_book_in_kazan(self, books_ui):
         """Тест выполняет поиск книги по полному названию в Казани.
         Нечувствителен к регистру.
         Чувствителен к опечаткам."""
@@ -82,7 +82,7 @@ class TestBooksSearch:
 
     @pytest.mark.negative
     @allure.story("Негативные тесты")
-    @allure.id("SearchBook-N")
+    @allure.id("SearchBook-3")
     @allure.title("Поиск книги по названию с некорректным регистром")
     @allure.description("Тест закрывает уведомления о подписке на рассылку"
                         " и предложение зарегистрироваться. "
@@ -91,7 +91,7 @@ class TestBooksSearch:
                         "Проверяет, что книга не найдена.")
     @allure.severity(Severity.MINOR)
     @allure.step('Поиск книги по названию с некорректным регистром')
-    def test_search_book_incorrect_case(self, books_ui):
+    def test_ui_search_book_incorrect_case(self, books_ui):
         """Тест выполняет поиск книги с неправильным регистром."""
         with allure.step('Ввод города и названия книги'):
             city = "Москва"
@@ -114,7 +114,7 @@ class TestBooksSearch:
 
     @pytest.mark.negative
     @allure.story("Негативные тесты")
-    @allure.id("SearchBook-N")
+    @allure.id("SearchBook-4")
     @allure.title("Поиск книги по названию с опечаткой")
     @allure.description("Тест закрывает уведомления о подписке на рассылку"
                         " и предложение зарегистрироваться. "
@@ -124,7 +124,7 @@ class TestBooksSearch:
                         "Находит список похожих книг.")
     @allure.severity(Severity.NORMAL)
     @allure.step('Поиск книги по названию с опечаткой')
-    def test_search_book_typo(self, books_ui):
+    def test_ui_search_book_typo(self, books_ui):
         """Тест выполняет поиск книги по названию с опечаткой.
         Нечувствителен к регистру.
         Чувствителен к опечаткам.
@@ -152,7 +152,7 @@ class TestBooksSearch:
 
     @pytest.mark.negative
     @allure.story("Негативные тесты")
-    @allure.id("SearchBook-N")
+    @allure.id("SearchBook-5")
     @allure.title("Поиск книг с названием из иероглифов")
     @allure.description("Тест закрывает уведомления о подписке на рассылку"
                         " и предложение зарегистрироваться. "
@@ -189,7 +189,7 @@ class TestBooksSearch:
 
     @pytest.mark.negative
     @allure.story("Негативные тесты")
-    @allure.id("SearchBook-N")
+    @allure.id("SearchBook-6")
     @allure.title("Поиск книг с названием из спец. символов")
     @allure.description("Тест закрывает уведомления о подписке на рассылку"
                         " и предложение зарегистрироваться. "

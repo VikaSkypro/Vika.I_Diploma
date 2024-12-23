@@ -7,19 +7,13 @@ from pages.books_api import BooksApi
 @allure.suite('API. Поиск книг в интернет-магазине "Читай-город"')
 class TestBooksAPI:
 
-    @pytest.fixture(scope="class")
-    def shopping_books(self):
-        url = "https://web-gate.chitai-gorod.ru"
-        api = BooksApi(url)
-        yield api
-
     @allure.feature("API.Главная страница")
     @allure.story("Поиск книг")
     @allure.title("Тест: Поиск книги по части названия в Москве")
     @allure.severity(Severity.NORMAL)
     @pytest.mark.positive
     @allure.step("1. Поиск книги по части названия в Москве с учетом регистра")
-    def test_search_book_moscow(self, shopping_books):
+    def test_api_search_book_moscow(self, shopping_books):
         with allure.step('Ввод города и названия книги'):
             city_id = "213"
             title = "Гарри Поттер и Проклятое дитя."
@@ -52,7 +46,7 @@ class TestBooksAPI:
     @pytest.mark.positive
     @allure.step("2. Поиск книги по полному названию"
         " в Санкт-Петербурге без учета регистра")
-    def test_search_book_other_city(self, shopping_books):
+    def test_api_search_book_other_city(self, shopping_books):
         api = shopping_books
         with allure.step("Передача параметров: город, название книги"):
             city_id = "2"
@@ -85,7 +79,7 @@ class TestBooksAPI:
     @allure.severity(Severity.NORMAL)
     @pytest.mark.positive
     @allure.step("3. Поиск книги по автору в Минске")
-    def test_search_book_author(self, shopping_books):
+    def test_api_search_book_author(self, shopping_books):
         api = shopping_books
         with allure.step('Ввод города и автора'):
             city_id = "694357"
@@ -123,7 +117,7 @@ class TestBooksAPI:
     @allure.severity(Severity.BLOCKER)
     @pytest.mark.positive
     @allure.step("4. Добавление найденных книг в корзину")
-    def test_add_books_to_cart(self, shopping_books):
+    def test_api_add_books_to_cart(self, shopping_books):
         api = shopping_books
         with allure.step('Ввод названия книги'):
             book_title = "Белоснежка и семь гномов"
@@ -167,7 +161,7 @@ class TestBooksAPI:
     @allure.severity(Severity.BLOCKER)
     @allure.step("5. Удаление всех книг из корзины")
     @pytest.mark.positive
-    def test_delete_books_cart(self, shopping_books):
+    def test_api_delete_books_cart(self, shopping_books):
         api = shopping_books
         with allure.step('Ввод города и названия книги'):
             city_id = "213"
@@ -204,7 +198,7 @@ class TestBooksAPI:
     @allure.severity(Severity.BLOCKER)
     @allure.step("6. Поиск книг с названием из одного символа")
     @pytest.mark.negative
-    def test_search_books_invalid_phrase(self, shopping_books):
+    def test_api_search_books_invalid_phrase(self, shopping_books):
         api = shopping_books
         with allure.step('Ввод названия книги'):
             phrase = "p"
@@ -234,7 +228,7 @@ class TestBooksAPI:
     @allure.severity(Severity.NORMAL)
     @allure.step("7. Поиск книги с неправильным регистром")
     @pytest.mark.negative
-    def test_search_book_sensitive_register(self, shopping_books):
+    def test_api_search_book_sensitive_register(self, shopping_books):
         api = shopping_books
         with allure.step('Ввод города и названия книги'):
             city_id = "213"
@@ -275,7 +269,7 @@ class TestBooksAPI:
     @allure.severity(Severity.MINOR)
     @allure.step("8. Поиск книг с названием из иероглифов")
     @pytest.mark.negative
-    def test_search_books_hieroglyphs(self, shopping_books):
+    def test_api_search_books_hieroglyphs(self, shopping_books):
         api = shopping_books
         with allure.step('Ввод названия книги'):
             phrase = "アびけ"
@@ -305,7 +299,7 @@ class TestBooksAPI:
     @allure.severity(Severity.MINOR)
     @allure.step("9. Поиск книг с названием из спец.символов")
     @pytest.mark.negative
-    def test_search_books_spec_char(self, shopping_books):
+    def test_api_search_books_spec_char(self, shopping_books):
         api = shopping_books
         with allure.step('Ввод названия книги'):
             phrase = "!@"

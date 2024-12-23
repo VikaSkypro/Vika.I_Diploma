@@ -1,11 +1,10 @@
 import requests
 import allure
 from typing import Dict, List, Tuple, Any, Optional
-
 from requests import Response
 
 # Переменные для авторизации
-TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ4NTc3MzgsImlhdCI6MTczNDY4OTczOCwiaXNzIjoiL2FwaS92MS9hdXRoL2Fub255bW91cyIsInN1YiI6IjQ2MjM5MWMzMGZhN2E3ZjkzYjM2NWIzNzMxM2U1MzAzMTBkOWU2MGYyOTU5MWE1NGI5MTk3YTI1YTYyNjBkNmUiLCJ0eXBlIjoxMH0.sdFcuPXEMrlKeD_Mg00ZEtL5aIM-nyXPfZLd0v4xqE8"
+TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzUxMjE1OTYsImlhdCI6MTczNDk1MzU5NiwiaXNzIjoiL2FwaS92MS9hdXRoL2Fub255bW91cyIsInN1YiI6IjhjN2UxYzZiZjExNTM4ZGQyNWRiOGI4ZTkxMWU4ZjJkZjVkODI2YjNkN2JmODg2OGIxYzNlNjNkMjkyNGMzZTIiLCJ0eXBlIjoxMH0.I5c5p6DAv2kP41AaMW-ROu-ouDFscvit4mZ7P2-nGDk"
 MY_HEADERS = {"Authorization": f"Bearer {TOKEN}", "Content-Type": "application/json"}
 
 

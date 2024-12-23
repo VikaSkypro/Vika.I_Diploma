@@ -1,4 +1,3 @@
-import pytest
 import allure
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
@@ -11,15 +10,15 @@ class BooksIU:
     def __init__(self, driver):
         self.driver = driver
 
-    @allure.step("Api. Выбор города")
+    @allure.step("Выбор города")
     def find_city(self, city) -> None:
-        """ Метод работает с popup выбора города.
+        """ Метод работает с pop-up выбора города.
         Если город совпадает с нужным -
-        закрывает popup. Если нет -
+        закрывает pop-up. Если нет -
         происходит выбор нужного города.
         """
         try:
-            with allure.step('Ожидание появления popup для изменения города'):
+            with allure.step('Ожидание появления pop-up для изменения города'):
                 city_popup = WebDriverWait(self.driver, 10).until(
                     EC.visibility_of_element_located(
                         (By.CSS_SELECTOR, ".change-city.change-city-container__popup-confirmation"))
@@ -27,7 +26,7 @@ class BooksIU:
             self.handle_city_popup(city_popup, city)
 
         except TimeoutException:
-            with allure.step('Попап не найден, проверяем текущий город'):
+            with allure.step('Pop-up не найден, проверяем текущий город'):
                 current_city_element = WebDriverWait(self.driver, 10).until(
                     EC.visibility_of_element_located((By.CSS_SELECTOR, ".header-city__title"))
                 )
@@ -39,7 +38,6 @@ class BooksIU:
                 else:
                     with allure.step('Текущий город не совпадает, меняем город'):
                         current_city_element.click()
-                    # Ожидаем появления модала выбора города
                     city_popup = WebDriverWait(self.driver, 10).until(
                         EC.visibility_of_element_located(
                             (By.CSS_SELECTOR, ".change-city.change-city-container__popup-confirmation"))
@@ -47,7 +45,7 @@ class BooksIU:
                     self.handle_city_popup(city_popup, city)
 
     def handle_city_popup(self, city_popup, city):
-        """ Обрабатывает попап выбора города. """
+        """ Обрабатывает pop-up выбора города. """
         with allure.step('Обработка pop-up для выбора города'):
             city_title = city_popup.find_element(By.CSS_SELECTOR, ".change-city__title").text
             if city in city_title:
@@ -56,7 +54,7 @@ class BooksIU:
                                                          ".button.change-city__button.change-city__button--accept.blue")
                     button_yes.click()
 
-                with allure.step('Popup закрылся'):
+                with allure.step('Pop-up закрылся'):
                     WebDriverWait(self.driver, 10).until(
                         EC.invisibility_of_element(city_popup)
                     )
@@ -66,7 +64,7 @@ class BooksIU:
                                                         ".button.change-city__button.change-city__button--cancel.light-blue")
                     button_no.click()
 
-                with allure.step('Ожидание появления popup для выбора города'):
+                with allure.step('Ожидание появления pop-up для выбора города'):
                     city_modal = WebDriverWait(self.driver, 10).until(
                         EC.visibility_of_element_located((By.CSS_SELECTOR, ".city-modal__content"))
                     )
@@ -75,7 +73,7 @@ class BooksIU:
                     city_option = city_modal.find_element(By.XPATH, f"//li[contains(text(), '{city}')]")
                     city_option.click()
 
-                with allure.step('Popup закрылся'):
+                with allure.step('Pop-up закрылся'):
                     WebDriverWait(self.driver, 10).until(
                         EC.invisibility_of_element(city_modal)
                     )
@@ -91,7 +89,7 @@ class BooksIU:
         except TimeoutException:
             pass
 
-    @allure.step("Api. Закрытие уведомления о подписке")
+    @allure.step("Закрытие уведомления о подписке")
     def close_notification(self) -> None:
         """Метод закрывает уведомление о подписке"""
         try:
@@ -103,7 +101,7 @@ class BooksIU:
         except TimeoutException:
             pass
 
-    @allure.step("Api. Поиск книг по названию")
+    @allure.step("Поиск книг по названию")
     def search_for_book(self, book_title) -> None:
         """Метод находит поле поиска, вводит фразу и нажимает Enter."""
         try:
@@ -125,7 +123,7 @@ class BooksIU:
             print(f"Произошла ошибка: {e}")
         pass
 
-    @allure.step("Api. Сбор названий книг в словарь")
+    @allure.step("Сбор названий книг в словарь")
     def find_all_book_titles(self) -> dict:
         """
         Метод для поиска всех названий книг

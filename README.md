@@ -1,11 +1,13 @@
-# Отчет
-По результатам проведения тестов сформирован отчет в Allure. Отчет хранится в директории _allure_report_all_.
-Его можно запустить из VSCode или PyCharm командой:
-```
-allure open allure-report
-```
+# pytest_ui_api_template
 
 ## Автоматизации тестирования на python, проект "Читай-город"
+
+### Шаги
+1. Склонировать проект 'git clone https://github.com/VikaSkypro/Vika.I_Diploma.git'
+2. Установить зависимости
+3. Запустить тесты с помощью команды: __pytest -s -v__
+4. Сгенерировать отчет 'allure generate allure-result -o allure-report'
+5. Открыть отчет 'allure open allure-report'
 
 ### Стек:
 - pytest
@@ -17,10 +19,13 @@ allure open allure-report
 - ./test - тесты 
 - ./pages - описание страниц
 
-### Шаги
-1. Склонировать проект 'git clone https://github.com/VikaSkypro/Vika.I_Diploma.git'
-2. Установить зависимости
-3. Запустить тесты 'pytest'
+### Библиотеки
+- pyp install pytest
+- pip install selenium
+- pip install webdriver-manager
+- pip install allure-pytest
+- pip install requests
+- pip install fuzzywuzzy
 
 ### Запуск тестов
 Запуск тестов UI проходит без авторизации.
@@ -32,6 +37,13 @@ allure open allure-report
 5. В таблице найти поле Name: access-token и скопировать из Value TOKEN без приставки "Bearer%20"
 6. Скопированный TOKEN вставить в файл BooksApi.py в переменную TOKEN = ""
 7. запускать тесты.
+
+### Отчет
+По результатам проведения тестов сформирован отчет в Allure. Отчет хранится в директории _allure_report_all_.
+Его можно запустить из VSCode или PyCharm командой:
+```
+allure open allure-report
+```
 
 ### Инструкция по запуску тестов для формирования отчета Allure
 1. Перейти в директорию с тестами.
