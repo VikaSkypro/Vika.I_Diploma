@@ -3,17 +3,19 @@
 ## Автоматизации тестирования на python, проект "Читай-город"
 
 ### Шаги
-1. Склонировать проект 'git clone https://github.com/VikaSkypro/Vika.I_Diploma.git'
-2. Установить зависимости
-3. Запустить тесты с помощью команды: __pytest -s -v__
-4. Сгенерировать отчет 'allure generate allure-result -o allure-report'
-5. Открыть отчет 'allure open allure-report'
+Список команд для работы с проектом:
+1. Склонировать проект с помощью команды: ```git clone https://github.com/VikaSkypro/Vika.I_Diploma.git```
+2. Установить зависимости: ```pip install > -r requirements.txt```
+3. Запустить тесты: ```pytest -s -v```
+4. Сгенерировать отчет: ```allure generate allure-result -o allure-report```
+5. Открыть отчет: ```allure open allure-report```
 
 ### Стек:
 - pytest
 - selenium
 - requests
 - allure
+- json
 
 ### Струткура:
 - ./test - тесты 
