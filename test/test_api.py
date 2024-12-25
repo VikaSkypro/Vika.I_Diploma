@@ -8,7 +8,7 @@ from pages.books_api import BooksApi
 class TestBooksAPI:
 
     @allure.feature("API.Главная страница")
-    @allure.story("Поиск книг")
+    @allure.story("Поиск книг. Позитивные тесты.")
     @allure.title("Тест: Поиск книги по части названия в Москве")
     @allure.severity(Severity.NORMAL)
     @pytest.mark.positive
@@ -40,7 +40,7 @@ class TestBooksAPI:
             assert any(title in book_title for book_title in titles_included)
 
     @allure.feature("API.Главная страница")
-    @allure.story("Поиск книг")
+    @allure.story("Поиск книг. Позитивные тесты.")
     @allure.title("Тест: Поиск книги по полному названию в Санкт-Петербурге")
     @allure.severity(Severity.NORMAL)
     @pytest.mark.positive
@@ -223,7 +223,7 @@ class TestBooksAPI:
             print(f'Получено сообщение об ошибке: "{error_message}"')
 
     @allure.feature("API.Главная страница")
-    @allure.story("Поиск книг")
+    @allure.story("Поиск книг. Негативные тесты.")
     @allure.title("Тест. Поиск книги с неправильным регистром")
     @allure.severity(Severity.NORMAL)
     @allure.step("7. Поиск книги с неправильным регистром")
@@ -264,7 +264,7 @@ class TestBooksAPI:
                 print(f"- {book}")
 
     @allure.feature("API.Главная страница")
-    @allure.story("Поиск книг")
+    @allure.story("Поиск книг. Негативные тесты.")
     @allure.title("Тест: Поиск книги с названием из иероглифов")
     @allure.severity(Severity.MINOR)
     @allure.step("8. Поиск книг с названием из иероглифов")
@@ -294,7 +294,7 @@ class TestBooksAPI:
             print(f'Получено сообщение об ошибке: "{error_message}"')
 
     @allure.feature("API.Главная страница")
-    @allure.story("Поиск книг")
+    @allure.story("Поиск книг. Негативные тесты.")
     @allure.title("Тест: Поиск книги с названием из спец.символов")
     @allure.severity(Severity.MINOR)
     @allure.step("9. Поиск книг с названием из спец.символов")
